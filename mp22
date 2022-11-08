@@ -34,11 +34,9 @@ radio.config(group=group_id)
 while True:
     # get view of the board
     
-    Board_View = ''
 
-    for i in range(len(29):
-      view = get_message()
-      Board_View += view
+    view = get_message()
+    Board_View = view
      
     
   
@@ -47,7 +45,7 @@ while True:
     microbit.display.clear()
     
     # show view of the board
-     display.show(Image(Board_View))
+    display.show(Image(Board_View))
     
     # wait for button A or B to be pressed
     while not (microbit.button_a.is_pressed() or microbit.button_b.is_pressed()):
