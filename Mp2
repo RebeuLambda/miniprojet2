@@ -1,0 +1,219 @@
+import math
+import random
+
+import radio
+import microbit
+
+# definition of functions
+def get_message():
+    """Wait and return a message from another micro:bit.
+    
+    Returns
+    -------
+    message: message sent by another micro:bit (str)
+        
+    """
+
+    message = None    
+    while message == None:
+        microbit.sleep(250)
+        message = radio.receive()
+    
+    return message
+   
+..........
+..........
+..........
+
+
+# settings
+group_id = ..........
+
+# setup radio to receive orders
+radio.on()
+radio.config(group=group_id)
+
+# create empty board + available pieces
+Board = ['0','0','0','0','0',':','0','0','0','0','0',':','0','0','0','0','0',':','0','0','0','0','0',':','0','0','0','0','0',]
+
+# loop until game is over
+nb_dropped_pieces = 0
+game_is_over = False
+
+
+
+while not game_is_over:
+    # show score (number of pieces dropped)
+    microbit.display.show(nb_dropped_pieces)
+    Piece_Position = ['0','0','0','0','0',':','0','0','0','0','0',':','0','0','0','0','0',':','0','0','0','0','0',':','0','0','0','0','0',]
+    # create a new piece in the top left corner
+    #Test avec 3 pièce
+    
+    Piece_Choisi = random.randint(1,3)
+    
+    if Piece_Choisi == 1:
+       Piece_Position[0] = 9 && Piece_Position[1] = 9 && Piece_Position[7] = 9
+    if Piece_Choisi == 2:
+       Piece_Position[0] = 9 && Piece_Position[1] = 9 && Piece_Position[7] = 9 && Piece_Position[13] = 9
+    if Piece_Choisi == 3:
+       Piece_Position[0] = 9 && Piece_Position[1] = 9 && Piece_Position[2] = 9 && Piece_Position[9] = 9 
+    
+    # check if the new piece collides with dropped pieces
+    N = 0
+    for i in range(len(Board):
+        
+        #On regarde si un pixel de la pièce entre en collision avec un pixel deja presente sur le plateau
+        if Board[N] == Piece_Position[N] :
+           game_is_over = True
+        N += 1
+    
+    if game_is_over == False:
+       #On Met la pièce sur le plateau si il y a effectivement de la place pour elle    
+       L = 0
+       for i in range(len(Board):
+           Board[L] = Piece_Position[L]
+           L +=1
+    if not game_is_over:
+        # ask orders until the current piece is dropped
+        piece_dropped = False
+        while not piece_dropped:
+            
+            # send state of the board to gamepad (as a string)
+            #Variable qui sert à rejoindre la liste en un string
+            Rien = ''
+            Plateau = Rien.join(Board)
+            #Faudra utiliser une boucle pour envoyer partie par partie mais faut demander au prof
+            radio.send(Plateau)
+            
+            # wait until gamepad sends an order
+            order = get_message()
+            
+            # execute order (drop or move piece)
+            if order == 'left:
+                 
+                 # Si Piece_bouge est == à 0 on bouge la piece sinon on ne touche pas à la piece
+                 Piece_bouge = 0
+                 Pixel = 0
+                 for i in range(len(Board):
+                     # Check si c'est une bordure 
+                    if Board[Pixel] == 9 and Pixel == 0 or Pixel == 6 or Pixel == 12 or Pixel == 18 or Pixel == 24:
+                          Piece_bouge += 1
+                    Pixel += 1
+                
+                #Si aucun pixel de la piece n'est à une bordure on change la position de la pièce
+                
+                if Piece_bouge == 0:
+                  Pixel = 0
+                  for i in range(len(Board):
+
+                      if Piece_Position[Pixel] == 9:
+                    #Regarde le pixel situé à la gauche du pixel 
+                          if Board[Pixel-1] == 0:
+                   
+                             Piece_Position[Pixel] == 0
+                             Piece_Position[Pixel-1] == 9
+                             Board[Pixel-1] == 9
+                      Pixel += 1
+
+
+              if order == 'right':
+                 
+                 # Si Piece_bouge est == à 0 on bouge la piece sinon on ne touche pas à la piece
+                 Piece_bouge = 0
+                 Pixel = 0
+                 for i in range(len(Board):
+                     # Check si c'est une bordure 
+                    if Board[Pixel] == 9 and Pixel == 4 or Pixel == 10 or Pixel == 16 or Pixel == 22 or Pixel == 28:
+                          Piece_bouge += 1
+                    Pixel += 1
+                
+                #Si aucun pixel de la piece n'est à une bordure on change la position de la pièce
+                
+                if Piece_bouge == 0:
+
+                  #Pixel est set à 28 car on a envie de modifier les pixel de la piece du dernier au premier
+                  Pixel = 28
+                  for i in range(len(Board):
+
+                      if Piece_Position[Pixel] == 9:
+                    #Regarde le pixel situé à la droite du pixel 
+                          if Board[Pixel+1] == 0:
+                   
+                             Piece_Position[Pixel] == 0
+                             Piece_Position[Pixel+1] == 9
+                             Board[Pixel+1] == 9
+                      Pixel -= 1
+
+
+
+                 
+                 
+              if order == 'up':
+                 
+                 
+                 Piece_bouge = 0
+                 Pixel = 0
+                 for i in range(len(Board):
+                     # Check si c'est une bordure 
+                    if Board[Pixel] == 9 and Pixel == 0 or Pixel == 1 or Pixel == 2 or Pixel == 3 or Pixel == 4:
+                          Piece_bouge += 1
+                    Pixel += 1
+                
+                #Si aucun pixel de la piece n'est à une bordure on change la position de la pièce
+                
+                # Si Piece_bouge est == à 0 on bouge la piece sinon on ne touche pas à la piece
+                if Piece_bouge == 0:
+
+                  #Pixel est set à 0 car on a envie de modifier les pixel de la piece du premier au dernier
+                  Pixel = 0
+                  for i in range(len(Board):
+
+                      if Piece_Position[Pixel] == 9:
+                    #Regarde le pixel situé en haut du pixel   
+                          if Board[Pixel-6] == 0:
+                   
+                             Piece_Position[Pixel] == 0
+                             Piece_Position[Pixel-6] == 9
+                             Board[Pixel-6] == 9
+
+                     Pixel += 1
+   
+
+               if order == 'down':
+                 
+                 # Si Piece_bouge est == à 0 on bouge la piece sinon on ne touche pas à la piece
+                 Piece_bouge = 0
+                 Pixel = 0
+                 for i in range(len(Board):
+                     # Check si c'est une bordure 
+                    if Board[Pixel] == 9 and Pixel == 0 or Pixel == 1 or Pixel == 2 or Pixel == 3 or Pixel == 4:
+                          Piece_bouge += 1
+                    Pixel += 1
+                
+                #Si aucun pixel de la piece n'est à une bordure on change la position de la pièce
+                
+                if Piece_bouge == 0:
+
+                  #Pixel est set à 28 car on a envie de modifier les pixel de la piece du dernier au premier
+                  Pixel = 28
+                  for i in range(len(Board):
+
+                      if Piece_Position[Pixel] == 9:
+                    #Regarde le pixel situé en bas du pixel   
+                          if Board[Pixel+6] == 0:
+                   
+                             Piece_Position[Pixel] == 0
+                             Piece_Position[Pixe+6] == 9
+                             Board[Pixel+6] == 9                       
+                      Pixel -= 1
+                      
+                      
+                 if order == 'drop':
+                    piece_dropped = True
+        
+        # wait a few milliseconds and clear screen
+        microbit.sleep(500)
+        microbit.display.clear()
+    
+# tell that the game is over
+microbit.display.scroll('Game is over', delay=100)
