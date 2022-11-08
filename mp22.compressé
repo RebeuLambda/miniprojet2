@@ -37,10 +37,10 @@ while not game_is_over:
     if not game_is_over:
         piece_dropped = False
         while not piece_dropped:
-            W = 0
-            for i in range(len(Board):          
-               radio.send(Board[W])
-               W +=1
+            Rien = ''
+            Plateau = Rien.join(Board)
+            radio.send(Plateau)
+               
             order = get_message()          
             # execute order (drop or move piece)
             if order == 'left' :
