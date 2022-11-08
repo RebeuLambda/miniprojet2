@@ -34,7 +34,7 @@ radio.on()
 radio.config(group=group_id)
 
 # create empty board + available pieces
-Board = ['0','0','0','0','0',':','0','0','0','0','0',':','0','0','0','0','0',':','0','0','0','0','0',':','0','0','0','0','0',]
+Board = ['0','0','0','0','0',':','0','0','0','0','0',':','0','0','0','0','0',':','0','0','0','0','0',':','0','0','0','0','0']
 
 # loop until game is over
 nb_dropped_pieces = 0
@@ -45,7 +45,7 @@ game_is_over = False
 while not game_is_over:
     # show score (number of pieces dropped)
     microbit.display.show(nb_dropped_pieces)
-    Piece_Position = ['0','0','0','0','0',':','0','0','0','0','0',':','0','0','0','0','0',':','0','0','0','0','0',':','0','0','0','0','0',]
+    Piece_Position = ['0','0','0','0','0',':','0','0','0','0','0',':','0','0','0','0','0',':','0','0','0','0','0',':','0','0','0','0','0']
     # create a new piece in the top left corner
     #Test avec 3 pièce
     
