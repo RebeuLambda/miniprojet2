@@ -1,0 +1,73 @@
+import radio
+import microbit
+
+# definition of functions
+def get_message():
+    """Wait and return a message from another micro:bit.
+    
+    Returns
+    -------
+    message: message sent by another micro:bit (str)
+        
+    """
+    
+    message = None    
+    while message == None:
+        microbit.sleep(250)
+        message = radio.receive()
+    
+    return message
+    
+..........
+..........
+..........
+
+
+# settings
+group_id = ..........
+
+# setup radio to receive/send messages
+radio.on()
+radio.config(group=group_id)
+    
+# loop forever (until micro:bit is switched off)
+while True:
+    # get view of the board
+    
+    Board_View = ''
+
+    for i in range(len(29):
+      view = get_message()
+      Board_View += view
+     
+    
+  
+    
+    # clear screen
+    microbit.display.clear()
+    
+    # show view of the board
+     display.show(Image(Board_View))
+    
+    # wait for button A or B to be pressed
+    while not (microbit.button_a.is_pressed() or microbit.button_b.is_pressed()):
+        microbit.sleep(50)
+
+    if microbit.button_a.is_pressed():
+        # send current direction
+        if microbit.accelerometer.get_x() < 0
+             order = 'left'
+        
+        if microbit.accelerometer.get_x() > 0
+             order = 'right'
+             
+        if microbit.accelerometer.get_y() < 0
+             order = 'down'     
+        
+        if microbit.accelerometer.get_y() > 0
+             order = 'up'
+      
+        radio.send(order)
+    elif microbit.button_b.is_pressed():
+        # notify that the piece should be dropped
+        radio.send('drop')
