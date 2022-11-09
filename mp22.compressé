@@ -8,7 +8,7 @@ def get_message():
         microbit.sleep(250)
         message = radio.receive()    
     return message
-group_id = ..........
+group_id = 24
 radio.on()
 radio.config(group=group_id)
 Board = ['0','0','0','0','0',':','0','0','0','0','0',':','0','0','0','0','0',':','0','0','0','0','0',':','0','0','0','0','0']
@@ -26,10 +26,11 @@ while not game_is_over:
        Piece_Position[0] = 9 && Piece_Position[1] = 9 && Piece_Position[2] = 9 && Piece_Position[9] = 9 
     N = 0
     for i in range(len(Board):
-        if Board[N] == Piece_Position[N] :
+        if Board[N] == Piece_Position[N]:
            game_is_over = True
         N += 1  
     if game_is_over == False:
+       nb_dropped_pieces += 1   
        L = 0
        for i in range(len(Board):
            Board[L] = Piece_Position[L]
@@ -37,38 +38,38 @@ while not game_is_over:
     if not game_is_over:
         piece_dropped = False
         while not piece_dropped:
-            Rien = ''
-            Plateau = Rien.join(Board)
-            radio.send(Plateau)
+             Rien = ''
+             Plateau = Rien.join(Board)
+             radio.send(Plateau)
                
             order = get_message()          
             # execute order (drop or move piece)
-            if order == 'left' :
+             if order == 'left':
                  Piece_bouge = 0
                  Pixel = 0
                  for i in range(len(Board):
                     if Board[Pixel] == 9 and Pixel == 0 or Pixel == 6 or Pixel == 12 or Pixel == 18 or Pixel == 24:
                           Piece_bouge += 1
                     Pixel += 1                                
-                if Piece_bouge == 0:
-                  Pixel = 0
-                  for i in range(len(Board):
+                 if Piece_bouge == 0:
+                    Pixel = 0
+                    for i in range(len(Board):
                       if Piece_Position[Pixel] == 9:
                           if Board[Pixel-1] == 0:                
                              Piece_Position[Pixel] == 0
                              Piece_Position[Pixel-1] == 9
                              Board[Pixel-1] == 9
                       Pixel += 1
-              if order == 'right':
+             if order == 'right':
                  Piece_bouge = 0
                  Pixel = 0
                  for i in range(len(Board):                   
                     if Board[Pixel] == 9 and Pixel == 4 or Pixel == 10 or Pixel == 16 or Pixel == 22 or Pixel == 28:
                           Piece_bouge += 1
                     Pixel += 1                
-                if Piece_bouge == 0:
-                  Pixel = 28
-                  for i in range(len(Board):
+                 if Piece_bouge == 0:
+                   Pixel = 28
+                   for i in range(len(Board):
                       if Piece_Position[Pixel] == 9:
                           if Board[Pixel+1] == 0:
                    
@@ -76,39 +77,39 @@ while not game_is_over:
                              Piece_Position[Pixel+1] == 9
                              Board[Pixel+1] == 9
                       Pixel -= 1   
-              if order == 'up':
+             if order == 'up':
                  Piece_bouge = 0
                  Pixel = 0
                  for i in range(len(Board):
                     if Board[Pixel] == 9 and Pixel == 0 or Pixel == 1 or Pixel == 2 or Pixel == 3 or Pixel == 4:
                           Piece_bouge += 1
                     Pixel += 1
-                if Piece_bouge == 0:
-                  Pixel = 0
-                  for i in range(len(Board):
+                 if Piece_bouge == 0:
+                   Pixel = 0
+                   for i in range(len(Board):
                       if Piece_Position[Pixel] == 9:   
                           if Board[Pixel-6] == 0:
                              Piece_Position[Pixel] == 0
                              Piece_Position[Pixel-6] == 9
                              Board[Pixel-6] == 9
-                     Pixel += 1
-               if order == 'down':
+                      Pixel += 1
+             if order == 'down':
                  Piece_bouge = 0
                  Pixel = 0
                  for i in range(len(Board): 
                     if Board[Pixel] == 9 and Pixel == 0 or Pixel == 1 or Pixel == 2 or Pixel == 3 or Pixel == 4:
                           Piece_bouge += 1
                     Pixel += 1
-                if Piece_bouge == 0:
-                  Pixel = 28
-                  for i in range(len(Board):
+                 if Piece_bouge == 0:
+                   Pixel = 28
+                   for i in range(len(Board):
                       if Piece_Position[Pixel] == 9:
-                          if Board[Pixel+6] == 0
+                          if Board[Pixel+6] == 0:
                              Piece_Position[Pixel] == 0
                              Piece_Position[Pixe+6] == 9
                              Board[Pixel+6] == 9                       
                       Pixel -= 1
-                 if order == 'drop':
+             if order == 'drop':
                     piece_dropped = True
         microbit.sleep(500)
         microbit.display.clear()
