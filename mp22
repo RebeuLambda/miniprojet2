@@ -18,13 +18,10 @@ def get_message():
     
     return message
     
-..........
-..........
-..........
 
 
 # settings
-group_id = ..........
+group_id = 24
 
 # setup radio to receive/send messages
 radio.on()
@@ -36,7 +33,7 @@ while True:
     
 
     view = get_message()
-    Board_View = view
+    microbit.display(microbit.Image(view))
      
     
   
@@ -50,22 +47,22 @@ while True:
     # wait for button A or B to be pressed
     while not (microbit.button_a.is_pressed() or microbit.button_b.is_pressed()):
         microbit.sleep(50)
-
+    #si l'user fait rien on renvoie ça
+    movement = 'none' 
     if microbit.button_a.is_pressed():
         # send current direction
-        if microbit.accelerometer.get_x() < 0
-             order = 'left'
-        
-        if microbit.accelerometer.get_x() > 0
-             order = 'right'
-             
-        if microbit.accelerometer.get_y() < 0
-             order = 'down'     
-        
-        if microbit.accelerometer.get_y() > 0
-             order = 'up'
+        if abs(microbit.accelerometer.get_x()) > abs(microbit.accelerometer.get_y()):
+           if accelerometer.get_x() > 0 :
+              movement = 'right'
+           else if microbit.accelerometer.get_x() < 0
+              movement = 'left'
+        else:
+           if microbit.accelerometer.get_y() > 0 :
+             movement = 'up'
+           else if microbit.accelerometer.get_y() < 0 :
+             movement = 'down'
       
-        radio.send(order)
+        radio.send(movement)
     elif microbit.button_b.is_pressed():
         # notify that the piece should be dropped
         radio.send('drop')
